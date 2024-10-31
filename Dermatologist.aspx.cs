@@ -78,7 +78,7 @@ namespace HealthHub
                     { "AverageRating", firstRow["AverageRating"] != DBNull.Value ? firstRow["AverageRating"] : 0.0 },
                     { "AvailabilityID", firstRow["AvailabilityID"] },
                     { "Hospitals", hospitals },
- { "ProfileImage", firstRow["ProfileImage"] != DBNull.Value ? firstRow["ProfileImage"].ToString() : "neutraldoctor.jpg" }                };
+ { "ProfileImage", firstRow["ProfileImage"] != DBNull.Value ? firstRow["ProfileImage"].ToString() : "pics/neutraldoctor.jpg" }                };
 
                 doctors.Add(doctor);
             }

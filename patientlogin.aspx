@@ -534,7 +534,7 @@ footer {
             </div>
         </div>
         <div class="footer-column contacts-column">
-            <h3>CONTACTS</h3>
+            <h3>CONTACT US</h3>
             <p><i class="fas fa-envelope"></i> connecthealthhub@outlook.com</p>
             
             <div class="footer-socials">

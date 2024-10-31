@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
@@ -640,7 +641,7 @@
                 </div>
             </div>
             <div class="footer-column contacts-column">
-                <h3>CONTACTS</h3>
+                <h3>CONTACT US</h3>
                 <p><i class="fas fa-envelope"></i>connecthealthhub@outlook.com</p>
 
                 <div class="footer-socials">

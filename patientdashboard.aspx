@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <style>
@@ -308,7 +309,7 @@
         }
 
 
-            .container {
+        .container {
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-auto-rows: minmax(100px, auto);
@@ -316,15 +317,15 @@
             padding: 20px;
         }
 
-        .container > div {
-            background-color: white;
-            color: black;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            height: auto;
-        }
+            .container > div {
+                background-color: white;
+                color: black;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                position: relative;
+                height: auto;
+            }
 
         .contact-card, .upcoming-appointments, .previous-appointments, .cancelled-appointments, .medical-records, .health-metrics {
             min-height: 300px;
@@ -383,9 +384,9 @@
             display: inline-block;
         }
 
-        .top-right-link:hover {
-            background-color: #001b40;
-        }
+            .top-right-link:hover {
+                background-color: #001b40;
+            }
 
         .cancellation-message {
             color: red;
@@ -419,10 +420,10 @@
             margin: 20px 0;
         }
 
-        .chart h3 {
-            text-align: center;
-            margin-bottom: 10px;
-        }
+            .chart h3 {
+                text-align: center;
+                margin-bottom: 10px;
+            }
 
         @media screen and (max-width: 768px) {
             .container {
@@ -518,9 +519,10 @@
         </nav>
     </header>
 
-   <form id="form1" runat="server">
+    <form id="form1" runat="server">
         <div class="p-4">
             <h1 class="text-2xl font-bold">Good Day,
+               
                 <asp:Label ID="lblPatientName" runat="server" /></h1>
             <p>Have a Nice Day!</p>
         </div>
@@ -697,7 +699,7 @@
                 </div>
             </div>
             <div class="footer-column contacts-column">
-                <h3>CONTACTS</h3>
+                <h3>CONTACT US</h3>
                 <p><i class="fas fa-envelope"></i>connecthealthhub@outlook.com</p>
 
                 <div class="footer-socials">
