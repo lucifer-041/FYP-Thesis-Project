@@ -10,7 +10,7 @@ namespace HealthHub
 {
     public partial class EditDoctorProfile : Page
     {
-        private const string DefaultProfileImagePath = "~/Images/neutraldoctor.jpg";
+        private const string DefaultProfileImagePath = "~/pics/neutraldoctor.jpg";
 
         protected void Page_Load(object sender, EventArgs e)
         {

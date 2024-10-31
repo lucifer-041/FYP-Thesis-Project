@@ -24,15 +24,6 @@ namespace HealthHub
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// lblSymptoms control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSymptoms;
-
-        /// <summary>
         /// lstSymptoms control.
         /// </summary>
         /// <remarks>
@@ -49,14 +40,5 @@ namespace HealthHub
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnFindDoctors;
-
-        /// <summary>
-        /// gvDoctors control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvDoctors;
     }
 }

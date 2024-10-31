@@ -54,11 +54,20 @@
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
+    <Reference Include="CsvHelper, Version=33.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.33.0.1\lib\net47\CsvHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Protobuf, Version=3.19.6.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.19.6\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
     <Reference Include="itextsharp, Version=5.5.13.4, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\iTextSharp.5.5.13.4\lib\net461\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.Numerics, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Numerics.8.0.0\lib\net462\Microsoft.Bcl.Numerics.dll</HintPath>
@@ -280,9 +289,52 @@
     <Content Include="Otolaryngologist.aspx" />
     <Content Include="Pathologist.aspx" />
     <Content Include="Pediatrician.aspx" />
+    <Content Include="pics\37.png" />
+    <Content Include="pics\38.png" />
+    <Content Include="pics\39.png" />
+    <Content Include="pics\allergist.png" />
+    <Content Include="pics\anesthesiologist.png" />
+    <Content Include="pics\Border.png" />
+    <Content Include="pics\cardiologist.png" />
+    <Content Include="pics\child.png" />
+    <Content Include="pics\dentist.png" />
+    <Content Include="pics\derma.png" />
+    <Content Include="pics\emergency.png" />
+    <Content Include="pics\endo.png" />
+    <Content Include="pics\ent.png" />
+    <Content Include="pics\familymed.png" />
+    <Content Include="pics\gastro.png" />
+    <Content Include="pics\general.png" />
+    <Content Include="pics\geriatrician.png" />
+    <Content Include="pics\hematologist.png" />
+    <Content Include="pics\hepatologist.png" />
+    <Content Include="pics\howitworks.png" />
+    <Content Include="pics\find.png" />
+    <Content Include="pics\infectious.png" />
+    <Content Include="pics\internist.png" />
+    <Content Include="pics\nephrologist.png" />
+    <Content Include="pics\neurologist.png" />
+    <Content Include="pics\obgyn.png" />
+    <Content Include="pics\oncologist.png" />
+    <Content Include="pics\ophthalmologist.png" />
+    <Content Include="pics\orthopedist.png" />
+    <Content Include="pics\pathologist.png" />
+    <Content Include="pics\pediatrician.png" />
+    <Content Include="pics\psychiatrist.png" />
+    <Content Include="pics\pulmonologist.png" />
+    <Content Include="pics\radiologist.png" />
+    <Content Include="pics\recommend.png" />
+    <Content Include="pics\appointment.png" />
+    <Content Include="pics\bg.png" />
+    <Content Include="pics\medicine.png" />
+    <Content Include="pics\rheumatologist.png" />
+    <Content Include="pics\sleepmed.png" />
+    <Content Include="pics\sportsmed.png" />
+    <Content Include="pics\urologist.png" />
     <Content Include="Psychiatrist.aspx" />
     <Content Include="Pulmonologist.aspx" />
     <Content Include="Radiologist.aspx" />
+    <Content Include="RecommendedDoctorsList.aspx" />
     <Content Include="Rheumatologist.aspx" />
     <Content Include="SleepMed.aspx" />
     <Content Include="bookappointment.aspx" />
@@ -315,17 +367,17 @@
     <Content Include="editdoctorprofile.aspx" />
     <Content Include="editpatientprofile.aspx" />
     <Content Include="favicon.ico" />
-    <Content Include="femalepatient.png" />
-    <Content Include="Footer.png" />
+    <Content Include="pics\femalepatient.png" />
+    <Content Include="pics\Footer.png" />
     <Content Include="ForgotPasswordDoctor.aspx" />
     <Content Include="ForgotPasswordPatient.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Location.aspx" />
     <Content Include="LogHealthMetric.aspx" />
-    <Content Include="malepatient.png" />
+    <Content Include="pics\malepatient.png" />
     <Content Include="medicinetracker.aspx" />
-    <Content Include="neutraldoctor.jpg" />
-    <Content Include="neutralpatient.png" />
+    <Content Include="pics\neutraldoctor.jpg" />
+    <Content Include="pics\neutralpatient.png" />
     <Content Include="patientdashboard.aspx" />
     <Content Include="patientlogin.aspx" />
     <Content Include="patientsignup.aspx" />
@@ -611,6 +663,13 @@
     </Compile>
     <Compile Include="Radiologist.aspx.designer.cs">
       <DependentUpon>Radiologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RecommendedDoctorsList.aspx.cs">
+      <DependentUpon>RecommendedDoctorsList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecommendedDoctorsList.aspx.designer.cs">
+      <DependentUpon>RecommendedDoctorsList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Rheumatologist.aspx.cs">
       <DependentUpon>Rheumatologist.aspx</DependentUpon>
