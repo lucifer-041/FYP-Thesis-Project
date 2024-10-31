@@ -1,0 +1,914 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.ML.FastTree.3.0.1\build\netstandard2.0\Microsoft.ML.FastTree.props" Condition="Exists('..\packages\Microsoft.ML.FastTree.3.0.1\build\netstandard2.0\Microsoft.ML.FastTree.props')" />
+  <Import Project="..\packages\LightGBM.3.3.5\build\LightGBM.props" Condition="Exists('..\packages\LightGBM.3.3.5\build\LightGBM.props')" />
+  <Import Project="..\packages\Microsoft.ML.Mkl.Components.3.0.1\build\netstandard2.0\Microsoft.ML.Mkl.Components.props" Condition="Exists('..\packages\Microsoft.ML.Mkl.Components.3.0.1\build\netstandard2.0\Microsoft.ML.Mkl.Components.props')" />
+  <Import Project="..\packages\Microsoft.ML.Mkl.Redist.3.0.1\build\netstandard2.0\Microsoft.ML.Mkl.Redist.props" Condition="Exists('..\packages\Microsoft.ML.Mkl.Redist.3.0.1\build\netstandard2.0\Microsoft.ML.Mkl.Redist.props')" />
+  <Import Project="..\packages\Microsoft.ML.3.0.1\build\netstandard2.0\Microsoft.ML.props" Condition="Exists('..\packages\Microsoft.ML.3.0.1\build\netstandard2.0\Microsoft.ML.props')" />
+  <Import Project="..\packages\Microsoft.ML.CpuMath.3.0.1\build\netstandard2.0\Microsoft.ML.CpuMath.props" Condition="Exists('..\packages\Microsoft.ML.CpuMath.3.0.1\build\netstandard2.0\Microsoft.ML.CpuMath.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{064F51E5-0F4E-43D9-925B-D77C55226D6A}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HealthHub</RootNamespace>
+    <AssemblyName>HealthHub</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44318</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.19.6.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.19.6\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.4, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.4\lib\net461\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.Numerics, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.Numerics.8.0.0\lib\net462\Microsoft.Bcl.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.1.1\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.3.0.1\lib\netstandard2.0\Microsoft.ML.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.3.0.1\lib\netstandard2.0\Microsoft.ML.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML.CpuMath, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.CpuMath.3.0.1\lib\netstandard2.0\Microsoft.ML.CpuMath.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.3.0.1\lib\netstandard2.0\Microsoft.ML.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML.DataView, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.DataView.3.0.1\lib\netstandard2.0\Microsoft.ML.DataView.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML.FastTree, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.FastTree.3.0.1\lib\netstandard2.0\Microsoft.ML.FastTree.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML.KMeansClustering, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.3.0.1\lib\netstandard2.0\Microsoft.ML.KMeansClustering.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML.LightGbm, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.LightGbm.3.0.1\lib\netstandard2.0\Microsoft.ML.LightGbm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML.Mkl.Components, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.Mkl.Components.3.0.1\lib\netstandard2.0\Microsoft.ML.Mkl.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML.PCA, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.3.0.1\lib\netstandard2.0\Microsoft.ML.PCA.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML.StandardTrainers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.3.0.1\lib\netstandard2.0\Microsoft.ML.StandardTrainers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML.TensorFlow, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.TensorFlow.3.0.1\lib\netstandard2.0\Microsoft.ML.TensorFlow.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ML.Transforms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ML.3.0.1\lib\netstandard2.0\Microsoft.ML.Transforms.dll</HintPath>
+    </Reference>
+    <Reference Include="NumSharp.Lite, Version=0.1.8.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\NumSharp.Lite.0.1.8\lib\netstandard2.0\NumSharp.Lite.dll</HintPath>
+    </Reference>
+    <Reference Include="Protobuf.Text, Version=0.4.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Protobuf.Text.0.4.0\lib\netstandard2.0\Protobuf.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz, Version=3.9.0.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.3.9.0\lib\net472\Quartz.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.CodeDom, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.CodeDom.4.5.0\lib\net461\System.CodeDom.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.5.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.7.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.AccessControl, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.AccessControl.4.5.0\lib\net461\System.IO.FileSystem.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Tensors, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Tensors.8.0.0\lib\net462\System.Numerics.Tensors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Security.AccessControl, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.AccessControl.4.5.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Principal.Windows.4.5.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Channels, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.4.7.1\lib\net461\System.Threading.Channels.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.1\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="AspNet.ScriptManager.jQuery">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.3.4.1\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ScriptManager.MSAjax">
+      <HintPath>..\packages\Microsoft.AspNet.ScriptManager.MSAjax.5.0.0\lib\net45\Microsoft.ScriptManager.MSAjax.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ScriptManager.WebForms">
+      <HintPath>..\packages\Microsoft.AspNet.ScriptManager.WebForms.5.0.0\lib\net45\Microsoft.ScriptManager.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="TensorFlow.NET, Version=0.20.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\TensorFlow.NET.0.20.1\lib\netstandard2.0\TensorFlow.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Web.Optimization.WebForms">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.WebForms.1.1.3\lib\net45\Microsoft.AspNet.Web.Optimization.WebForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.FriendlyUrls">
+      <HintPath>..\packages\Microsoft.AspNet.FriendlyUrls.Core.1.0.2\lib\net45\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="About.aspx" />
+    <Content Include="AdminDashboard.aspx" />
+    <Content Include="AdminLogin.aspx" />
+    <Content Include="Allergist.aspx" />
+    <Content Include="Anesthesiologist.aspx" />
+    <Content Include="Cardiologist.aspx" />
+    <Content Include="Dentist.aspx" />
+    <Content Include="Dermatologist.aspx" />
+    <Content Include="EmergencyMedicine.aspx" />
+    <Content Include="Endocrinologist.aspx" />
+    <Content Include="FamilyMedicine.aspx" />
+    <Content Include="Gastroenterologist.aspx" />
+    <Content Include="GeneralPhysician.aspx" />
+    <Content Include="Geriatrician.aspx" />
+    <Content Include="Hematologist.aspx" />
+    <Content Include="Hepatologist.aspx" />
+    <Content Include="Home.aspx" />
+    <Content Include="InfectiousDisease.aspx" />
+    <Content Include="Internist.aspx" />
+    <Content Include="Nephrologist.aspx" />
+    <Content Include="Neurologist.aspx" />
+    <Content Include="ObstetricianGynecologist.aspx" />
+    <Content Include="Oncologist.aspx" />
+    <Content Include="Ophthalmologist.aspx" />
+    <Content Include="Orthopedist.aspx" />
+    <Content Include="Otolaryngologist.aspx" />
+    <Content Include="Pathologist.aspx" />
+    <Content Include="Pediatrician.aspx" />
+    <Content Include="Psychiatrist.aspx" />
+    <Content Include="Pulmonologist.aspx" />
+    <Content Include="Radiologist.aspx" />
+    <Content Include="Rheumatologist.aspx" />
+    <Content Include="SleepMed.aspx" />
+    <Content Include="bookappointment.aspx" />
+    <Content Include="Border.png" />
+    <Content Include="ComplaintForm.aspx" />
+    <Content Include="Contact.aspx" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-grid.rtl.css" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.css" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css" />
+    <Content Include="Content\bootstrap-utilities.css" />
+    <Content Include="Content\bootstrap-utilities.min.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.css" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap.rtl.css" />
+    <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Default.aspx" />
+    <Content Include="doctoravailability.aspx" />
+    <Content Include="doctordashboard.aspx" />
+    <Content Include="doctorlogin.aspx" />
+    <Content Include="DoctorProfile.aspx" />
+    <Content Include="doctorsignup.aspx" />
+    <Content Include="editdoctorprofile.aspx" />
+    <Content Include="editpatientprofile.aspx" />
+    <Content Include="favicon.ico" />
+    <Content Include="femalepatient.png" />
+    <Content Include="Footer.png" />
+    <Content Include="ForgotPasswordDoctor.aspx" />
+    <Content Include="ForgotPasswordPatient.aspx" />
+    <Content Include="Global.asax" />
+    <Content Include="Location.aspx" />
+    <Content Include="LogHealthMetric.aspx" />
+    <Content Include="malepatient.png" />
+    <Content Include="medicinetracker.aspx" />
+    <Content Include="neutraldoctor.jpg" />
+    <Content Include="neutralpatient.png" />
+    <Content Include="patientdashboard.aspx" />
+    <Content Include="patientlogin.aspx" />
+    <Content Include="patientsignup.aspx" />
+    <Content Include="pics\logo.jpeg" />
+    <Content Include="pics\revolver.png" />
+    <Content Include="pics\Untitled design %281%29.png" />
+    <Content Include="PrivacyPolicy.aspx" />
+    <Content Include="ResetPasswordDoctor.aspx" />
+    <Content Include="ResetPasswordPatient.aspx" />
+    <Content Include="review.aspx" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.esm.js" />
+    <Content Include="Scripts\bootstrap.esm.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.esm.min.js.map" />
+    <Content Include="Scripts\bootstrap.esm.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Content\bootstrap.rtl.min.css.map" />
+    <Content Include="Content\bootstrap.rtl.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.rtl.css.map" />
+    <Content Include="Content\bootstrap-utilities.min.css.map" />
+    <Content Include="Content\bootstrap-utilities.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.rtl.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.min.css.map" />
+    <Content Include="Content\bootstrap-grid.rtl.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.js" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\WebForms\DetailsView.js" />
+    <Content Include="Scripts\WebForms\Focus.js" />
+    <Content Include="Scripts\WebForms\GridView.js" />
+    <Content Include="Scripts\WebForms\Menu.js" />
+    <Content Include="Scripts\WebForms\MenuStandards.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjax.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxApplicationServices.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxComponentModel.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxCore.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxGlobalization.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxHistory.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxNetwork.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxSerialization.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxTimer.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxWebForms.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxWebServices.js" />
+    <Content Include="Scripts\WebForms\SmartNav.js" />
+    <Content Include="Scripts\WebForms\TreeView.js" />
+    <Content Include="Scripts\WebForms\WebForms.js" />
+    <Content Include="Scripts\WebForms\WebParts.js" />
+    <Content Include="Scripts\WebForms\WebUIValidation.js" />
+    <Content Include="Site.Master" />
+    <Content Include="SportsMed.aspx" />
+    <Content Include="Urologist.aspx" />
+    <Content Include="ViewMedicalRecords.aspx" />
+    <Content Include="ViewSwitcher.ascx" />
+    <Content Include="Web.config" />
+    <Content Include="Bundle.config" />
+    <Content Include="Site.Mobile.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdminDashboard.aspx.cs">
+      <DependentUpon>AdminDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminDashboard.aspx.designer.cs">
+      <DependentUpon>AdminDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AdminLogin.aspx.cs">
+      <DependentUpon>AdminLogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AdminLogin.aspx.designer.cs">
+      <DependentUpon>AdminLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Allergist.aspx.cs">
+      <DependentUpon>Allergist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Allergist.aspx.designer.cs">
+      <DependentUpon>Allergist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Anesthesiologist.aspx.cs">
+      <DependentUpon>Anesthesiologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Anesthesiologist.aspx.designer.cs">
+      <DependentUpon>Anesthesiologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Cardiologist.aspx.cs">
+      <DependentUpon>Cardiologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Cardiologist.aspx.designer.cs">
+      <DependentUpon>Cardiologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Dentist.aspx.cs">
+      <DependentUpon>Dentist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dentist.aspx.designer.cs">
+      <DependentUpon>Dentist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Dermatologist.aspx.cs">
+      <DependentUpon>Dermatologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dermatologist.aspx.designer.cs">
+      <DependentUpon>Dermatologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EmergencyMedicine.aspx.cs">
+      <DependentUpon>EmergencyMedicine.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EmergencyMedicine.aspx.designer.cs">
+      <DependentUpon>EmergencyMedicine.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Endocrinologist.aspx.cs">
+      <DependentUpon>Endocrinologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Endocrinologist.aspx.designer.cs">
+      <DependentUpon>Endocrinologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="FamilyMedicine.aspx.cs">
+      <DependentUpon>FamilyMedicine.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FamilyMedicine.aspx.designer.cs">
+      <DependentUpon>FamilyMedicine.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Gastroenterologist.aspx.cs">
+      <DependentUpon>Gastroenterologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Gastroenterologist.aspx.designer.cs">
+      <DependentUpon>Gastroenterologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralPhysician.aspx.cs">
+      <DependentUpon>GeneralPhysician.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="GeneralPhysician.aspx.designer.cs">
+      <DependentUpon>GeneralPhysician.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Geriatrician.aspx.cs">
+      <DependentUpon>Geriatrician.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Geriatrician.aspx.designer.cs">
+      <DependentUpon>Geriatrician.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Hematologist.aspx.cs">
+      <DependentUpon>Hematologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Hematologist.aspx.designer.cs">
+      <DependentUpon>Hematologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Hepatologist.aspx.cs">
+      <DependentUpon>Hepatologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Hepatologist.aspx.designer.cs">
+      <DependentUpon>Hepatologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="InfectiousDisease.aspx.cs">
+      <DependentUpon>InfectiousDisease.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InfectiousDisease.aspx.designer.cs">
+      <DependentUpon>InfectiousDisease.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Internist.aspx.cs">
+      <DependentUpon>Internist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Internist.aspx.designer.cs">
+      <DependentUpon>Internist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MLModel.cs" />
+    <Compile Include="Nephrologist.aspx.cs">
+      <DependentUpon>Nephrologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Nephrologist.aspx.designer.cs">
+      <DependentUpon>Nephrologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Neurologist.aspx.cs">
+      <DependentUpon>Neurologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Neurologist.aspx.designer.cs">
+      <DependentUpon>Neurologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ObstetricianGynecologist.aspx.cs">
+      <DependentUpon>ObstetricianGynecologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ObstetricianGynecologist.aspx.designer.cs">
+      <DependentUpon>ObstetricianGynecologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Oncologist.aspx.cs">
+      <DependentUpon>Oncologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Oncologist.aspx.designer.cs">
+      <DependentUpon>Oncologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Ophthalmologist.aspx.cs">
+      <DependentUpon>Ophthalmologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Ophthalmologist.aspx.designer.cs">
+      <DependentUpon>Ophthalmologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Orthopedist.aspx.cs">
+      <DependentUpon>Orthopedist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Orthopedist.aspx.designer.cs">
+      <DependentUpon>Orthopedist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Otolaryngologist.aspx.cs">
+      <DependentUpon>Otolaryngologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Otolaryngologist.aspx.designer.cs">
+      <DependentUpon>Otolaryngologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pathologist.aspx.cs">
+      <DependentUpon>Pathologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pathologist.aspx.designer.cs">
+      <DependentUpon>Pathologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pediatrician.aspx.cs">
+      <DependentUpon>Pediatrician.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pediatrician.aspx.designer.cs">
+      <DependentUpon>Pediatrician.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Psychiatrist.aspx.cs">
+      <DependentUpon>Psychiatrist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Psychiatrist.aspx.designer.cs">
+      <DependentUpon>Psychiatrist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pulmonologist.aspx.cs">
+      <DependentUpon>Pulmonologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pulmonologist.aspx.designer.cs">
+      <DependentUpon>Pulmonologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Radiologist.aspx.cs">
+      <DependentUpon>Radiologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Radiologist.aspx.designer.cs">
+      <DependentUpon>Radiologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Rheumatologist.aspx.cs">
+      <DependentUpon>Rheumatologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rheumatologist.aspx.designer.cs">
+      <DependentUpon>Rheumatologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SleepMed.aspx.cs">
+      <DependentUpon>SleepMed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SleepMed.aspx.designer.cs">
+      <DependentUpon>SleepMed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="bookappointment.aspx.cs">
+      <DependentUpon>bookappointment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="bookappointment.aspx.designer.cs">
+      <DependentUpon>bookappointment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ComplaintForm.aspx.cs">
+      <DependentUpon>ComplaintForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ComplaintForm.aspx.designer.cs">
+      <DependentUpon>ComplaintForm.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="doctoravailability.aspx.cs">
+      <DependentUpon>doctoravailability.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="doctoravailability.aspx.designer.cs">
+      <DependentUpon>doctoravailability.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="doctordashboard.aspx.cs">
+      <DependentUpon>doctordashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="doctordashboard.aspx.designer.cs">
+      <DependentUpon>doctordashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="doctorlogin.aspx.cs">
+      <DependentUpon>doctorlogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="doctorlogin.aspx.designer.cs">
+      <DependentUpon>doctorlogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DoctorProfile.aspx.cs">
+      <DependentUpon>DoctorProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DoctorProfile.aspx.designer.cs">
+      <DependentUpon>DoctorProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="doctorsignup.aspx.cs">
+      <DependentUpon>doctorsignup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="doctorsignup.aspx.designer.cs">
+      <DependentUpon>doctorsignup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editdoctorprofile.aspx.cs">
+      <DependentUpon>editdoctorprofile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editdoctorprofile.aspx.designer.cs">
+      <DependentUpon>editdoctorprofile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="editpatientprofile.aspx.cs">
+      <DependentUpon>editpatientprofile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="editpatientprofile.aspx.designer.cs">
+      <DependentUpon>editpatientprofile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EveningDoseReminderJob.cs" />
+    <Compile Include="ForgotPasswordDoctor.aspx.cs">
+      <DependentUpon>ForgotPasswordDoctor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPasswordDoctor.aspx.designer.cs">
+      <DependentUpon>ForgotPasswordDoctor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ForgotPasswordPatient.aspx.cs">
+      <DependentUpon>ForgotPasswordPatient.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPasswordPatient.aspx.designer.cs">
+      <DependentUpon>ForgotPasswordPatient.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Location.aspx.cs">
+      <DependentUpon>Location.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Location.aspx.designer.cs">
+      <DependentUpon>Location.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="LogHealthMetric.aspx.cs">
+      <DependentUpon>LogHealthMetric.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LogHealthMetric.aspx.designer.cs">
+      <DependentUpon>LogHealthMetric.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="medicinetracker.aspx.cs">
+      <DependentUpon>medicinetracker.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="medicinetracker.aspx.designer.cs">
+      <DependentUpon>medicinetracker.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MorningDoseReminderJob.cs" />
+    <Compile Include="NightDoseReminderJob.cs" />
+    <Compile Include="patientdashboard.aspx.cs">
+      <DependentUpon>patientdashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="patientdashboard.aspx.designer.cs">
+      <DependentUpon>patientdashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="patientlogin.aspx.cs">
+      <DependentUpon>patientlogin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="patientlogin.aspx.designer.cs">
+      <DependentUpon>patientlogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="patientsignup.aspx.cs">
+      <DependentUpon>patientsignup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="patientsignup.aspx.designer.cs">
+      <DependentUpon>patientsignup.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="PrivacyPolicy.aspx.cs">
+      <DependentUpon>PrivacyPolicy.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PrivacyPolicy.aspx.designer.cs">
+      <DependentUpon>PrivacyPolicy.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResetPasswordDoctor.aspx.cs">
+      <DependentUpon>ResetPasswordDoctor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResetPasswordDoctor.aspx.designer.cs">
+      <DependentUpon>ResetPasswordDoctor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ResetPasswordPatient.aspx.cs">
+      <DependentUpon>ResetPasswordPatient.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResetPasswordPatient.aspx.designer.cs">
+      <DependentUpon>ResetPasswordPatient.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="review.aspx.cs">
+      <DependentUpon>review.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="review.aspx.designer.cs">
+      <DependentUpon>review.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\HospitalService.cs" />
+    <Compile Include="Services\LocationService.cs" />
+    <Compile Include="Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Mobile.Master.cs">
+      <DependentUpon>Site.Mobile.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Mobile.Master.designer.cs">
+      <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="SportsMed.aspx.cs">
+      <DependentUpon>SportsMed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SportsMed.aspx.designer.cs">
+      <DependentUpon>SportsMed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Urologist.aspx.cs">
+      <DependentUpon>Urologist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Urologist.aspx.designer.cs">
+      <DependentUpon>Urologist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewMedicalRecords.aspx.cs">
+      <DependentUpon>ViewMedicalRecords.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewMedicalRecords.aspx.designer.cs">
+      <DependentUpon>ViewMedicalRecords.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ViewSwitcher.ascx.designer.cs">
+      <DependentUpon>ViewSwitcher.ascx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="uploads\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>57569</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44318/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.ML.CpuMath.3.0.1\build\netstandard2.0\Microsoft.ML.CpuMath.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ML.CpuMath.3.0.1\build\netstandard2.0\Microsoft.ML.CpuMath.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.ML.3.0.1\build\netstandard2.0\Microsoft.ML.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ML.3.0.1\build\netstandard2.0\Microsoft.ML.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.ML.3.0.1\build\netstandard2.0\Microsoft.ML.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ML.3.0.1\build\netstandard2.0\Microsoft.ML.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.ML.Mkl.Redist.3.0.1\build\netstandard2.0\Microsoft.ML.Mkl.Redist.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ML.Mkl.Redist.3.0.1\build\netstandard2.0\Microsoft.ML.Mkl.Redist.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.ML.Mkl.Components.3.0.1\build\netstandard2.0\Microsoft.ML.Mkl.Components.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ML.Mkl.Components.3.0.1\build\netstandard2.0\Microsoft.ML.Mkl.Components.props'))" />
+    <Error Condition="!Exists('..\packages\LightGBM.3.3.5\build\LightGBM.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\LightGBM.3.3.5\build\LightGBM.props'))" />
+    <Error Condition="!Exists('..\packages\LightGBM.3.3.5\build\LightGBM.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\LightGBM.3.3.5\build\LightGBM.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.ML.FastTree.3.0.1\build\netstandard2.0\Microsoft.ML.FastTree.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.ML.FastTree.3.0.1\build\netstandard2.0\Microsoft.ML.FastTree.props'))" />
+  </Target>
+  <Import Project="..\packages\Microsoft.ML.3.0.1\build\netstandard2.0\Microsoft.ML.targets" Condition="Exists('..\packages\Microsoft.ML.3.0.1\build\netstandard2.0\Microsoft.ML.targets')" />
+  <Import Project="..\packages\LightGBM.3.3.5\build\LightGBM.targets" Condition="Exists('..\packages\LightGBM.3.3.5\build\LightGBM.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
